@@ -1,0 +1,129 @@
+Group Member:
+	
+	z5077824	Hui Jia
+	z5002356	Yuxiang	Qiu
+
+==================================
+#1. Project Structure Introduction
+==================================
+
+Using python3, also need to install "numpy" package
+
+project
+	|------cf_item_knn.py: Core code which implement a basic recommender system with simple UI based on KNN and cosine similarity
+
+	|------cf_pearson.py: Auxiliary program using to evaluate the system(use Pearson correlation and cross validation)
+
+	|------result.txt: Contain all the evaluation result, MAE and RMSE
+
+	|------report.pdf: Analyse the project, present my solution, evaluate the result and draw a summary of this project
+
+	|------ml-100k/* : use ml-100k/* as the dataset.(Need to download)
+
+==================================
+#2. cf_item_knn.py
+==================================
+	This is my core code, in order to make it clear I would explain the interfaces clearly
+
+	Outline:
+		1. Read the ui.base(i = 1,2,3,4,5) and get two matrix, one is RateMatrix[movies * users] and the
+		other is AvgRateMatrix[movies * users].
+
+		2. Implement the similarity functions,cosine similarity.
+
+		3. Set queryUserId and K neighbors
+
+		4. Implement predicting rate function to predict rate based on queryId, k, and the matrixs on step1.
+
+		5. Implement recommendList function to recommend movieList to user
+
+	interfaces:
+
+		# initialise training file and get matrix
+		1. init(path/to/baseFile) return rateMatrix, avgMatrix
+
+		# receive two movie vector and get similarity
+		2. getSimilarity(destIdVector, neighborVector) return similarity
+
+		#	receiver matrix, predict userId,  destMovieId, and neighbors
+		3. getNeighbors(matrix, userId, destId, K) return similarityList
+
+		#	predict the rate for the user on the given movieId
+		4. predictRate(matrix, avgMatrix, userId, movieId, k, cosSim) return rate
+
+		#  initialise test file to dict
+		5. initTest(path/to/testfile) return dict
+
+		#  get topN recommendList by a given user
+		6.newRecommend(matrix, avgMatrix, userId, N) return recommendList
+
+		#  initialise movie data file to a map
+		7. initMovie(path/to/moviedata)  returm movies
+
+		#  format recommend movies and output
+		8. recommend(matrix, avgMatrix, userId, k, movies)  
+
+		#  evaluate the MAE, RMSE 
+		9. getEvaluation(user_dict, matrix, avgMatrix, K, Cosine = true)
+
+		#   format user rate record and output
+		10. printUserRate(userId, matrix, movies) 
+
+		#   print a simple UI
+		11. printUI()
+
+
+==================================
+#3. cf_pearson.py
+==================================
+	Auxiliary code outline:
+
+	interface:
+
+		#	set the k value in recommend system
+		1.	set_k_value(K)
+
+		# 	put the training data and testing data into matrix
+		2. get_data(path/to/file)
+
+		#	count similarity for every two movie in dataset
+		3. get_similarity();
+
+		#	Pearson correlation algorithm
+		4. similarity()
+
+		#	give recommended movie list
+		5.	predict_movie_rating(userId, movieId)
+
+		#	evaluate System using Mean Absolute Error and Root mean squares error
+		6.	compute_MAE_and_RMSE()
+
+
+==================================
+#4. result.txt
+==================================
+	
+	This result file contains all the result data: 
+
+
+	Cosine:							Pearson:	
+	K 		MAE 		RMSE 		MAE 		RMSE 
+	
+	5
+	10
+	15
+	20
+	.
+	.
+	.
+==================================
+#5. report.pdf
+==================================
+	
+	Draw the conclusion and summary of this project
+
+==================================
+#6. ml-100k/* 
+==================================
+
+	dataset download from groupLen
